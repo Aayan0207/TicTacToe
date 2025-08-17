@@ -1,68 +1,8 @@
 from copy import deepcopy
-from math import inf
 from random import randint
 
 X = "X"
 O = "O"
-
-
-def main():
-    """Main function for the game"""
-    person = input("Play as X or O? (X moves first): ").upper()
-    ai = X if person == O else O
-    play(initialize(), person, ai)
-
-
-def display(board):
-    """Print the board in an appealing manner"""
-    new_board = deepcopy(board)
-    for row in range(3):
-        for column in range(3):
-            if not new_board[row][column]:
-                new_board[row][column] = ""
-    for row in new_board:
-        for column in row:
-            print(column, end="\t")
-        print()
-
-
-def play(board, person, ai):
-    """Play TicTacToe"""
-    while not game_over(board):
-        if ai == X and board == initialize():
-            print("AI is thinking....")
-            randommove = random_move()
-            board[randommove[0]][randommove[1]] = X
-            display(board)
-            continue
-        next_move = eval(input("Enter move: "))
-        if is_valid(next_move, board):
-            board = result(board, next_move)
-            display(board)
-            if game_over(board):
-                if winner(board) == person:
-                    print("You win!")
-                elif not winner(board):
-                    print("Draw")
-                else:
-                    print("AI Wins!")
-                break
-            print("AI is thinking....")
-            ai_move = minimax(board)
-            board = result(board, ai_move)
-            display(board)
-            if game_over(board):
-                if winner(board) == person:
-                    print("You win!")
-                elif not winner(board):
-                    print("Draw")
-                else:
-                    print("AI Wins!")
-                break
-        else:
-            print("Invalid move.")
-            continue
-
 
 def winner(board):
     """
@@ -189,7 +129,7 @@ def max_value(board):
     """Tries to maximize value -Minimax"""
     if game_over(board):
         return None, utility(board)
-    move, check = None, -inf
+    move, check = None, float("-inf")
     for action in moves(board):
         minimum = min_value(result(board, action))
         if minimum[1] > check:
@@ -201,13 +141,9 @@ def min_value(board):
     """Tries to minimize value -Minimax"""
     if game_over(board):
         return None, utility(board)
-    move, check = None, inf
+    move, check = None, float("inf")
     for action in moves(board):
         maximum = max_value(result(board, action))
         if maximum[1] < check:
             move, check = action, maximum[1]
     return move, check
-
-
-if __name__ == "__main__":
-    main()
