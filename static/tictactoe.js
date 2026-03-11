@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   const boxes = document.querySelectorAll(".square");
-  const guess = document.getElementById("guess");
-  const X = document.getElementById("X");
-  const O = document.getElementById("O");
-  const new_game = document.getElementById("New_Game");
+  const guess = document.querySelector("#guess");
+  const X = document.querySelector("#X");
+  const O = document.querySelector("#O");
+  const new_game = document.querySelector("#New_Game");
   const message = document.querySelector("#text_string");
   const form = document.querySelector("#TicTacToe-form");
   form.onsubmit = (event) => {
